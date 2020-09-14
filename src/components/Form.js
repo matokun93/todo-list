@@ -1,17 +1,33 @@
 import React from 'react';
-import nextId from 'react-id-generator';
 
-const Form = ({ inputText, setInputText, todos, setTodos, setFilter }) => {
+const Form = ({
+	inputText,
+	setInputText,
+	todos,
+	setTodos,
+	setFilter,
+	showToast,
+}) => {
 	const inputTextHandler = (e) => {
 		setInputText(e.target.value);
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
-		setTodos([...todos, { text: inputText, completed: false, id: nextId() }]);
-		setInputText('');
+		if (isEmpty(inputText) /*inputText === ''*/) {
+			showToast('El texto está vacío', 1400);
+		} else {
+			setTodos([
+				...todos,
+				{ text: inputText, completed: false, id: Date.now().toString() },
+			]);
+			setInputText('');
+		}
 	};
 	const filterHandler = (e) => {
 		setFilter(e.target.value);
+	};
+	const isEmpty = (text) => {
+		return !text || !text.trim();
 	};
 
 	return (
@@ -27,9 +43,9 @@ const Form = ({ inputText, setInputText, todos, setTodos, setFilter }) => {
 			</button>
 			<div className='select'>
 				<select onChange={filterHandler} name='todos' className='filter-todo'>
-					<option value='all'>All</option>
-					<option value='completed'>Completed</option>
-					<option value='uncompleted'>Uncompleted</option>
+					<option value='all'>Todas</option>
+					<option value='completed'>Completadas</option>
+					<option value='uncompleted'>Pendientes</option>
 				</select>
 			</div>
 		</form>
