@@ -1,0 +1,8 @@
+.map ----> realiza una funcion sobre cada elemento de un array 
+array.map(element => {
+    aca va la funcion
+})
+
+
+.filter ----> filtra un array (elimina ciertos elementos del array que no cumplan con la condicion dada)
+array.filter((el) => el.id !== variableX.id)   conserva las que no tienen el mismo id

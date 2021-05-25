@@ -1,0 +1,74 @@
+npx create-react-app nombreApp 
+npm start para correr la app 
+
+
+borrar todo en app.js excepto el div classname="app"
+borrar logo 
+
+en archivos:
+ borrar logo.svg 
+ borrar appTest
+
+los componentes se meten en una carpeta que se crea "components" todo dentro del src
+
+dentro del component: 
+    lo primero es importar React ----import React from "react";
+    tambien se importan los components que se van a usar dentro de este otro component --- ejemplo: import todo from "./Todo";
+    para usar props hay que poner en la misma linea donde se importa react ------- import React, { useState } from "react";
+
+
+    const componentName = ({setInputText, variable, function ...}) => {            Acá en el parentesis se ataja la funcion que se pasa desde la app.js con brackets {} (antes se escribia props)
+
+        aca puedo escribir codigo javascript, aca se definen las funciones que editan las variables ---   
+        ejemplo: 
+         const inputTextHandler = (e) => {                 en este ejemplo usamos "e" como la variable, representa el evento y el console log imprimer toda la info de ese evento
+             console.log(e.target.value);                               si queremos el value del input que se encuentra en esa info ponemos e.target.value
+             
+             etInputText(e.target.value);                         con esta funcion que pasamos desde app.js actualizamos la variable inputText, y se puede usar en todo el app.js                     
+        }
+
+        const otraFuncionSubmit = (e) => {
+            e.preventDefault();                        funcion para que no se refresque la pagina, previene el comportamiento standard
+        }
+
+        return(
+            "aca va todo el html"
+        )
+    }  
+
+    aca abjo se exporta el componente ------ export default componentName;
+
+dentro del app.js: 
+
+    arriba hay que importar los components creados----- import componentName from "./components/componentName"
+
+    arriba del codigo html se puede escribir javascript, y ahi se definen los props (una variable + la funcion que la edita) ----- const [variable, function] = useState("");
+    esas comillas dentro del useState indican que la variable es vacia, puede ser un valor o puede ser [] para indicar que es un array vacio
+    
+    en el medio va el codigo html de la pagina principal y los components se escriben como un tag html de esta forma <component />
+    
+    para pasar las funciones (y variables) que creamos arriba y que se puedan utilizar en los components hay que pasarlos de esta manera: <Component setInputText = {setImputText} />
+    para atajar esa funcion dentro del component hay que escribir el nombre dentro del parentesis del component (ver seccion del component)
+
+
+para guardar en localStorage: 
+    
+    normalmente usar una funcion para guardar en local, ejemplo: savelocalTodos(), y ponerla dentro del useEffect(); (cuandos e actualice la viarable que queremos la guardamos)
+    para guardar en local se usa la funcion localStorage.setItem("item", JSON.stringify(todos));
+
+    hacer tambien una funcion para obtener las cosas guardadas, ejemplo: getLocalTodos(), y ponerla en un useEffect()  que solo se gatille una vez ---> 
+    useEffect(()=> {
+        getLocalTodos()
+    },[]);
+    para obtener algo del local se usa la funcion localStorage.getItem("items"); pero se debe Parsear ----> let variable = JSON.parse(localStorage.getIyem("items")) 
+
+
+
+
+
+*useEffect 
+    se puede usar useEffect para realizar una funcion cada vez que cambia un state (o variable)
+
+    useEffect( () => {
+        function here
+    },[ variable, variable2 ])      dentro de los corchetes va la variable o variables que gatillalan funcion cuando cambia, si esta vacío [] la funcion se gatilla cuando se carga el componente una sola vez
